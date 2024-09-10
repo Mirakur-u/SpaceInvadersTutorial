@@ -1,3 +1,17 @@
-[gd_scene format=3 uid="uid://dlgjtppuhh3av"]
+[gd_scene load_steps=4 format=3 uid="uid://d2dcluscxs78i"]
 
-[node name="Main" type="Node"]
+[ext_resource type="PackedScene" uid="uid://pr5p7npudey5" path="res://Scenes/player.tscn" id="1_acwwb"]
+[ext_resource type="PackedScene" uid="uid://denyjlkl2fxo6" path="res://Scenes/invader_spawner.tscn" id="1_hwoki"]
+[ext_resource type="PackedScene" uid="uid://dcnepyrdos1cy" path="res://Scenes/bullet_catcher.tscn" id="2_4r2em"]
+
+[node name="main" type="Node"]
+
+[node name="InvaderSpawner" parent="." instance=ExtResource("1_hwoki")]
+
+[node name="Player" parent="." instance=ExtResource("1_acwwb")]
+position = Vector2(0, 302)
+scale = Vector2(4, 4)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="BulletCatcher" parent="." instance=ExtResource("2_4r2em")]
