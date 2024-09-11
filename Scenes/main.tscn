@@ -1,8 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://d2dcluscxs78i"]
+[gd_scene load_steps=6 format=3 uid="uid://d2dcluscxs78i"]
 
 [ext_resource type="PackedScene" uid="uid://pr5p7npudey5" path="res://Scenes/player.tscn" id="1_acwwb"]
 [ext_resource type="PackedScene" uid="uid://denyjlkl2fxo6" path="res://Scenes/invader_spawner.tscn" id="1_hwoki"]
 [ext_resource type="PackedScene" uid="uid://dcnepyrdos1cy" path="res://Scenes/bullet_catcher.tscn" id="2_4r2em"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qyvg0"]
+size = Vector2(20, 646)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e8fj2"]
+size = Vector2(87, 563)
 
 [node name="main" type="Node"]
 
@@ -15,3 +21,37 @@ scale = Vector2(4, 4)
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="BulletCatcher" parent="." instance=ExtResource("2_4r2em")]
+
+[node name="walls" type="Node" parent="."]
+
+[node name="RightWall" type="Area2D" parent="walls"]
+position = Vector2(575, 0)
+collision_layer = 32
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="walls/RightWall"]
+shape = SubResource("RectangleShape2D_qyvg0")
+
+[node name="LeftWall" type="Area2D" parent="walls"]
+position = Vector2(-575, 0)
+collision_layer = 32
+collision_mask = 4
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="walls/LeftWall"]
+shape = SubResource("RectangleShape2D_qyvg0")
+
+[node name="BottomWall" type="Area2D" parent="walls"]
+position = Vector2(0, 300)
+rotation = 1.5708
+scale = Vector2(1, 2)
+collision_layer = 32
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="walls/BottomWall"]
+visible = false
+position = Vector2(-20.5, 0)
+shape = SubResource("RectangleShape2D_e8fj2")
+
+[connection signal="area_entered" from="walls/RightWall" to="InvaderSpawner" method="_on_right_wall_area_entered"]
+[connection signal="area_entered" from="walls/LeftWall" to="InvaderSpawner" method="_on_left_wall_area_entered"]
+[connection signal="area_entered" from="walls/BottomWall" to="InvaderSpawner" method="_on_bottom_wall_area_entered"]
