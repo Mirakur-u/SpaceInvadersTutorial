@@ -1,0 +1,66 @@
+[gd_scene load_steps=6 format=3 uid="uid://dg858iccly43r"]
+
+[ext_resource type="Script" path="res://Scripts/ui.gd" id="1_yn1rq"]
+[ext_resource type="FontFile" uid="uid://ch103gi2tob72" path="res://Assets/font/andina.ttf" id="2_luqo0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m1u70"]
+bg_color = Color(0.71573, 0, 0.122914, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nu4w4"]
+bg_color = Color(0.956571, 0.000463114, 0.178608, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f7bq6"]
+bg_color = Color(0.810818, 0, 0.147038, 1)
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_yn1rq")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Points" type="Label" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("2_luqo0")
+theme_override_font_sizes/font_size = 30
+text = "SCORE:0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="GameOverContainer" type="CenterContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="GameOverBox" type="VBoxContainer" parent="MarginContainer/GameOverContainer"]
+visible = false
+layout_mode = 2
+
+[node name="GameOverLabel" type="Label" parent="MarginContainer/GameOverContainer/GameOverBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_luqo0")
+theme_override_font_sizes/font_size = 120
+text = "GAME OVER"
+
+[node name="GameOverButton" type="Button" parent="MarginContainer/GameOverContainer/GameOverBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_luqo0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_m1u70")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_nu4w4")
+theme_override_styles/normal = SubResource("StyleBoxFlat_f7bq6")
+text = "RESTART"

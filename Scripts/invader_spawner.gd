@@ -2,6 +2,10 @@ extends Node2D
 
 class_name InvaderSpawner
 
+signal invader_destroyed(points: int)
+signal game_won
+signal game_lost
+
 #spawner configuration
 const ROWS = 5
 const COLUMNS = 11
@@ -18,6 +22,9 @@ var invader_scene = preload("res://Scenes/invader.tscn")
 @onready var movement_timer: Timer = $MovementTimer
 @onready var shot_timer: Timer = $ShotTimer
 var invader_shot_scene = preload("res://Scenes/invader_shot.tscn")
+
+var invader_destroyed_count = 0
+var invader_total_count = ROWS * COLUMNS
 
 func _ready() -> void:
 	movement_timer.timeout.connect(move_invaders)
@@ -53,6 +60,7 @@ func spawn_invader(invader_config, spawn_position:Vector2):
 	var invader = invader_scene.instantiate()
 	invader.config = invader_config
 	invader.global_position = spawn_position
+	invader.invader_destroyed.connect(on_invader_destroyed)
 	add_child(invader)
 	
 func move_invaders():
@@ -78,4 +86,17 @@ func on_invader_shot():
 
 
 func _on_bottom_wall_area_entered(area: Area2D) -> void:
-	pass # Replace with function body.
+	if area is Invader:
+		game_lost.emit()
+		movement_timer.stop()
+		shot_timer.stop()
+
+
+func on_invader_destroyed(points: int):
+	invader_destroyed.emit(points)
+	invader_destroyed_count +=1
+	
+	if invader_destroyed_count == invader_total_count:
+		game_won.emit()
+		shot_timer.stop()
+		movement_timer.stop()

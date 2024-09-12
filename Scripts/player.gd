@@ -1,7 +1,8 @@
 extends Area2D
 
-
 class_name Player
+
+signal player_destroyed
 
 @export var speed = 200
 var direction = Vector2.ZERO
@@ -52,3 +53,10 @@ func on_player_destroyed():
 #func _on_area_entered(area: Area2D) -> void:
 #	if area is InvaderShot:
 #		on_player_destroyed()
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "destroy":
+		await get_tree().create_timer(1).timeout
+		player_destroyed.emit()
+		queue_free()
